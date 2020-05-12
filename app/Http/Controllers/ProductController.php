@@ -45,7 +45,7 @@ class ProductController extends Controller
         ]);
         $product = new Product();
         $product->name = $request->name;
-        $product->description = $request->docs;
+        $product->description = $request->description;
         $product->value = $request->value;
         $product->amount = $request->amount;
         $product->save();
@@ -72,7 +72,9 @@ class ProductController extends Controller
      */
     public function edit($id)
     {
-        //
+        $product = Product::find($id);
+
+        return view('dashboard.product.edit',compact('product'));
     }
 
     /**
@@ -84,7 +86,14 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $product = Product::find($id);
+        $product->name = $request->name;
+        $product->description = $request->description;
+        $product->value = $request->value;
+        $product->amount = $request->amount;
+        $product->save();
+
+        return redirect()->route('product.index');
     }
 
     /**
