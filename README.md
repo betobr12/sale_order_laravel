@@ -7,3 +7,5 @@
 #configurar .env
 #php artisan migrate
 #gerar uma APP_KEY -> comando: php artisan key:generate
+
+<p>Xampp + MySQL</p>

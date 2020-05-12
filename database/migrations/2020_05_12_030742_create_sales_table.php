@@ -13,8 +13,17 @@ class CreateSalesTable extends Migration
      */
     public function up()
     {
-        Schema::create('sales', function (Blueprint $table) {
-            $table->id();
+        Schema::create('sales',
+
+        function (Blueprint $table) {
+            $table->increments('id');
+            $table->integer('client_id')->unsigned();
+            $table->string('slug')->unique();
+            $table->double('total',11.2);
+            $table->boolean('is_approved')->default(false);
+            $table->foreign('client_id')
+            ->references('id')->on('clients')
+            ->onDelete('cascade');
             $table->timestamps();
         });
     }

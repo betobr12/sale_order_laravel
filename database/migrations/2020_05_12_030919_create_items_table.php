@@ -14,7 +14,17 @@ class CreateItemsTable extends Migration
     public function up()
     {
         Schema::create('items', function (Blueprint $table) {
-            $table->id();
+            $table->increments('id');
+            $table->integer('product_id')->unsigned();
+            $table->integer('sale_id')->unsigned();
+            $table->double('sale_value',11.2);
+            $table->integer('sale_amount');
+            $table->foreign('product_id')
+                ->references('id')->on('products')
+                ->onDelete('cascade');
+            $table->foreign('sale_id')
+                ->references('id')->on('sales')
+                ->onDelete('cascade');
             $table->timestamps();
         });
     }
