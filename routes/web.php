@@ -17,6 +17,18 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+/*
 Route::get('/dashboard', function () {
     return view('dashboard');
-});
+});*/
+
+//Route::get('dashboard/client','ClientController@index')->name('cliente.index');
+//Route::get('dashboard/client/create','ClientController@create')->name('cliente.create');
+
+
+Route::get('/dashboard','ClientController@index')->name('dasboard.client.index');
+Route::resource('/dashboard/client','ClientController');
+
+Route::get('/dashboard','ProductController@index')->name('dasboard.product.index');
+Route::resource('/dashboard/product','ProductController');
+

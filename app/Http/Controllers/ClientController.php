@@ -2,8 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Client;
 use Illuminate\Http\Request;
-
+use Illuminate\Support\Str;
 class ClientController extends Controller
 {
     /**
@@ -13,7 +14,9 @@ class ClientController extends Controller
      */
     public function index()
     {
-        //
+        $clients = Client::latest()->get();
+
+        return view('dashboard.client.index',compact('clients'));
     }
 
     /**
@@ -23,7 +26,8 @@ class ClientController extends Controller
      */
     public function create()
     {
-        //
+        return view('dashboard.client.create');
+
     }
 
     /**
@@ -34,7 +38,20 @@ class ClientController extends Controller
      */
     public function store(Request $request)
     {
-        //
+
+        $this->validate($request,[
+            'name' => 'required',
+            'docs' => 'required'
+        ]);
+        $client = new Client();
+        $client->name = $request->name;
+        $client->docs = $request->docs;
+        $client->slug = Str::slug($request->name . $request->docs);
+        $client->save();
+
+        return redirect()->route('client.index');
+
+
     }
 
     /**
@@ -56,7 +73,8 @@ class ClientController extends Controller
      */
     public function edit($id)
     {
-        //
+        $client = Client::find($id);
+        return view('dashboard.client.edit',compact('client'));
     }
 
     /**
@@ -68,7 +86,12 @@ class ClientController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $client = Client::find($id);
+        $client->name = $request->name;
+        $client->docs = $request->docs;
+        $client->slug = Str::slug($request->name . $request->docs);
+        $client->save();
+        return redirect()->route('client.index');
     }
 
     /**

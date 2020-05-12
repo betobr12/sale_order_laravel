@@ -39,7 +39,7 @@
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="">
+                  <a class="nav-link" href="{{ route('client.index') }}">
                     <span data-feather="users"></span>
                     Clientes
                   </a>
@@ -59,8 +59,8 @@
               <h4>Painel de Controle</h4>
               <div class="btn-toolbar mb-2 mb-md-0">
                 <div class="btn-group mr-2">
-                  <a href="" class="btn btn-sm btn-outline-secondary">Criar Cliente</a>
-                  <a href="" class="btn btn-sm btn-outline-secondary">Criar Produto</a>
+                  <a href="{{ route('client.create') }}" class="btn btn-sm btn-outline-secondary">Criar Cliente</a>
+                  <a href="{{ route('product.create') }}" class="btn btn-sm btn-outline-secondary">Criar Produto</a>
                   <a href="" class="btn btn-sm btn-outline-secondary">Criar uma Venda</a>
                   <a href="" class="btn btn-sm btn-outline-secondary">Home</a>
 
