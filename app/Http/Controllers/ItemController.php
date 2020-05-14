@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Item;
 use Illuminate\Http\Request;
 
 class ItemController extends Controller
@@ -23,7 +24,7 @@ class ItemController extends Controller
      */
     public function create()
     {
-        //
+        return view('dashboard.item.create');
     }
 
     /**
@@ -34,7 +35,25 @@ class ItemController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $this->validate($request,[
+
+            'product_id' => 'required',
+            'sale_id' => 'required',
+            'sale_value' => 'required',
+            'sale_amount' => 'required'
+
+           ]);
+
+           $item = new Item();
+           $item->product_id = $request->product_id;
+           $item->sale_id = $request->sale_id;
+           $item->sale_value = $request->sale_value;
+           $item->sale_amount = $request->sale_amount;
+           $item->save();
+
+           return redirect()->back();
+
+
     }
 
     /**
@@ -45,7 +64,7 @@ class ItemController extends Controller
      */
     public function show($id)
     {
-        //
+
     }
 
     /**
@@ -56,7 +75,8 @@ class ItemController extends Controller
      */
     public function edit($id)
     {
-        //
+        $item = Item::find($id);
+        return view('dashboard.item.edit', compact('item'));
     }
 
     /**
@@ -68,7 +88,14 @@ class ItemController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        $item = Item::find($id);
+        $item->product_id = $request->product_id;
+        $item->sale_id = $request->sale_id;
+        $item->sale_value = $request->sale_value;
+        $item->sale_amount = $request->sale_amount;
+        $item->save();
+
+        return redirect()->back();
     }
 
     /**

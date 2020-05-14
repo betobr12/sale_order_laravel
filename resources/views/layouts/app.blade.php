@@ -13,12 +13,8 @@
 
     <nav class="navbar navbar-dark fixed-top bg-primary flex-md-nowrap p-0 shadow">
         <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="">Gerenciador de Vendas</a>
-        <input class="form-control form-control-dark w-100" type="text" placeholder="Venda por Cliente" aria-label="Search">
-        <ul class="navbar-nav px-3">
-          <li class="nav-item text-nowrap">
-            <a class="nav-link" href="#">Buscar</a>
-          </li>
-        </ul>
+        <input class="form-control form-control-dark w-100" type="text" placeholder="Buscar venda por cliente" aria-label="Search">
+
       </nav>
 
       <div class="container-fluid">
@@ -27,27 +23,27 @@
             <div class="sidebar-sticky">
               <ul class="nav flex-column">
                 <li class="nav-item">
-                  <a class="nav-link active" href="">
+                  <a class="nav-link active" href="{{ route('dashboard.index') }}">
                     <span data-feather="home"></span>
-                    Dashboard <span class="sr-only"></span>
+                    Painel de Controle <span class="sr-only"></span>
                   </a>
                 </li>
                 <li class="nav-item">
-                  <a class="nav-link" href="">
+                  <a class="nav-link" href="{{ route('sale.index') }}">
                     <span data-feather="file"></span>
-                    Vendas
+                   Lista Vendas
                   </a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="{{ route('client.index') }}">
                     <span data-feather="users"></span>
-                    Clientes
+                   Lista Clientes
                   </a>
                 </li>
                 <li class="nav-item">
                   <a class="nav-link" href="{{ route('product.index') }}">
                     <span data-feather="plus-circle"></span>
-                    Produtos
+                   Lista Produtos
                   </a>
                 </li>
               </ul>
@@ -61,8 +57,8 @@
                 <div class="btn-group mr-2">
                   <a href="{{ route('client.create') }}" class="btn btn-sm btn-outline-secondary">Criar Cliente</a>
                   <a href="{{ route('product.create') }}" class="btn btn-sm btn-outline-secondary">Criar Produto</a>
-                  <a href="" class="btn btn-sm btn-outline-secondary">Criar uma Venda</a>
-                  <a href="" class="btn btn-sm btn-outline-secondary">Home</a>
+                  <a href="{{ route('sale.create') }}" class="btn btn-sm btn-outline-secondary">Criar uma Venda</a>
+                  <a href="{{ route('dashboard.index') }}" class="btn btn-sm btn-outline-secondary">Home</a>
 
                 </div>
 
@@ -75,7 +71,8 @@
           </main>
         </div>
       </div>
- <script src="{{ asset('site/jquery.js') }}"></script>
+
+<script src="{{ asset('site/jquery.js') }}"></script>
 <script src="{{ asset('site/bootstrap.js') }}"></script>
 <script src="{{ asset('site/feather.min.js') }}"></script>
 <script src="{{ asset('site/dashboard.js') }}"></script>

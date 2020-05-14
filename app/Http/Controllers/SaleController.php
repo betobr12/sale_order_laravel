@@ -2,6 +2,9 @@
 
 namespace App\Http\Controllers;
 
+use App\Client;
+use App\Item;
+use App\Sale;
 use Illuminate\Http\Request;
 
 class SaleController extends Controller
@@ -13,7 +16,10 @@ class SaleController extends Controller
      */
     public function index()
     {
-        //
+        $sales = Sale::latest()->get();
+        return view('dashboard.sale.index',compact('sales'));
+
+
     }
 
     /**
@@ -23,7 +29,10 @@ class SaleController extends Controller
      */
     public function create()
     {
-        //
+
+        $sales = Sale::all();
+
+        return view('dashboard.sale.create',compact('sales'));
     }
 
     /**
@@ -34,7 +43,21 @@ class SaleController extends Controller
      */
     public function store(Request $request)
     {
-        //
+        $items = Item::all();
+        $this->validate($request,[
+
+         'client_id' => 'required'
+
+        ]);
+
+        $sale = new Sale();
+        $sale->client_id = $request->client_id;
+        $sale->save();
+
+        $includeid = $sale->id;
+
+        return view('item.create',compact('sale'),compact(['includeid']));
+
     }
 
     /**
@@ -56,7 +79,17 @@ class SaleController extends Controller
      */
     public function edit($id)
     {
-        //
+        $sale = Sale::find($id);
+
+        $client = $sale->client()->get();
+        $clientTarget = Client::findOrFail($sale->client_id);
+        $clientList = Client::select('id','name')->get();
+
+
+        $sale = Sale::find($id);
+        $items =  $sale->items()->get();
+
+       return view('dashboard.sale.edit',compact('sale','items'), compact(['clientTarget', 'clientList']));
     }
 
     /**
@@ -68,7 +101,12 @@ class SaleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        //
+        {
+            $sale = Sale::find($id);
+            $sale->client_id = $request->client_id;
+            $sale->save();
+            return redirect()->back();
+        }
     }
 
     /**
