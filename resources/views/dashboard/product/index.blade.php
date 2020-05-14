@@ -11,6 +11,7 @@
 @section('content')
 
 <div class="container">
+    <h3>Lista de Produtos</h3>
     <table class="table table-hover table-bordered">
         <thead>
           <tr>

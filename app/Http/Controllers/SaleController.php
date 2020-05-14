@@ -29,10 +29,10 @@ class SaleController extends Controller
      */
     public function create()
     {
-
+        $idsale = 0;
         $sales = Sale::all();
-
-        return view('dashboard.sale.create',compact('sales'));
+        $clientList = Client::select('id','name')->get();
+        return view('dashboard.sale.create',compact('sales'),compact(['clientList','idsale']));
     }
 
     /**
@@ -43,20 +43,21 @@ class SaleController extends Controller
      */
     public function store(Request $request)
     {
-        $items = Item::all();
         $this->validate($request,[
-
          'client_id' => 'required'
-
         ]);
 
         $sale = new Sale();
         $sale->client_id = $request->client_id;
         $sale->save();
 
-        $includeid = $sale->id;
+        $idsale = $sale->id;
+        $items = $sale->items();
+        //return redirect()->route('item.create',compact(['idsale']));
 
-        return view('item.create',compact('sale'),compact(['includeid']));
+        return view('dashboard.item.create',compact('sale','items'),compact(['idsale']));
+
+
 
     }
 
@@ -117,6 +118,8 @@ class SaleController extends Controller
      */
     public function destroy($id)
     {
-        //
+        $sale = Sale::findOrFail($id);
+        $sale->delete();
+        return redirect()->back();
     }
 }

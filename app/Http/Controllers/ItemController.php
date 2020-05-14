@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Item;
+use App\Product;
+use App\Sale;
 use Illuminate\Http\Request;
 
 class ItemController extends Controller
@@ -22,9 +24,11 @@ class ItemController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
-    {
-        return view('dashboard.item.create');
+    public function create()   {
+
+        $productList = Product::select('id','name')->get();
+
+        return view('dashboard.item.create',compact(['productList']));
     }
 
     /**
@@ -51,7 +55,12 @@ class ItemController extends Controller
            $item->sale_amount = $request->sale_amount;
            $item->save();
 
-           return redirect()->back();
+          $idsale = $item->sale_id;
+          $sale = Sale::find($idsale);
+          $items =  $sale->items()->get();
+          $productList = Product::select('id','name')->get();
+
+           return view('dashboard.item.create',compact('sale','idsale','items',['productList']));
 
 
     }

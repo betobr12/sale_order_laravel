@@ -9,26 +9,29 @@
 @endpush
 
 @section('content')
-
+<div class="container">
 <div class="jumbotron">
     <h1 class="display-4">Venda</h1>
-    <p class="lead">Insira um cliente para criar a venda</p>
+    <p class="lead">Selecione um cliente para criar a venda</p>
     <hr class="my-4">
     <form action="{{ route('sale.store') }}" method="POST">
         @csrf
         <div class="form-row">
           <div class="form-group col-md-6">
             <label for="nome">Cliente</label>
-            <input type="text" name="client_id" class="form-control">
+                <select name="client_id" id="" class="form-control">
+                    @foreach ($clientList as $client)
+                        <option value="{{$client->id}}">{{$client->name}}</option>
+                    @endforeach
+                </select>
           </div>
         </div>
         <button type="submit" class="btn btn-primary">Inserir</button>
       </form>
   </div>
+</div>
 
-
-
-<div class="container">
+<h3>Lista de Vendas Sem Confirmação</h3>
     <table class="table table-hover table-bordered">
         <thead>
           <tr>
@@ -61,6 +64,8 @@
         </tbody>
       </table>
   </div>
+
+</div>
 
 @endsection
 

@@ -11,6 +11,7 @@
 @section('content')
 
 <div class="container">
+    <h3>Lista de todas as Vendas</h3>
     <table class="table table-hover table-bordered">
         <thead>
           <tr>
@@ -37,8 +38,16 @@
                 <td>{{ $sale->created_at }}</td>
                 <td>
                     <a href="{{route('sale.edit', $sale->id)}}" class="btn btn-primary">Alterar</a>
-                    <input class="btn btn-danger" type="submit" value="Excluir">
+
+                    <form style="display: inline-block;" method="POST" action="{{route('sale.destroy', $sale->id)}}" data-toggle="tooltip" data-placement="top" title="Excluir" onsubmit="return confirm('Confirma exclusão?')">
+                        {{method_field('DELETE')}}{{ csrf_field() }}
+                             <button class="btn btn-danger" type="submit">
+                                 Excluir
+                             </button>
+                         </form>
+
                 </td>
+
               </tr>
 
             @endforeach
