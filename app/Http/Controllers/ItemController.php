@@ -5,6 +5,8 @@ namespace App\Http\Controllers;
 use App\Item;
 use App\Product;
 use App\Sale;
+use Brian2694\Toastr\Facades\Toastr;
+use Illuminate\Database\Console\Migrations\RefreshCommand;
 use Illuminate\Http\Request;
 
 class ItemController extends Controller
@@ -28,7 +30,7 @@ class ItemController extends Controller
 
         $productList = Product::select('id','name')->get();
 
-        return view('dashboard.item.create',compact(['productList']));
+        return view('dashboard.item.create',compact(['productList','idsale']));
     }
 
     /**
@@ -60,7 +62,10 @@ class ItemController extends Controller
           $items =  $sale->items()->get();
           $productList = Product::select('id','name')->get();
 
-           return view('dashboard.item.create',compact('sale','idsale','items',['productList']));
+           // return view('dashboard.item.create',compact('sale','idsale','items',['productList']));
+           Toastr::success('Item incluido na venda com sucesso','Successo');
+
+            return redirect()->back();
 
 
     }
@@ -115,6 +120,8 @@ class ItemController extends Controller
      */
     public function destroy($id)
     {
-        //
+
+
+        Toastr::success('Item incluido na venda com sucesso','Successo');
     }
 }

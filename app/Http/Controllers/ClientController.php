@@ -3,6 +3,8 @@
 namespace App\Http\Controllers;
 
 use App\Client;
+use App\Sale;
+use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 use Illuminate\Support\Str;
 class ClientController extends Controller
@@ -103,7 +105,13 @@ class ClientController extends Controller
     public function destroy($id)
     {
         $client = Client::findOrFail($id);
+        $clientdel = $client->sale->id;
+        if($clientdel > 0){
+         Toastr::error('Cliente Possui uma venda e nao pode ser excluido','Alerta');
+        }else{
         $client->delete();
+        Toastr::success('Cliente excluido com sucesso','Successo');
         return redirect()->back();
+    }
     }
 }

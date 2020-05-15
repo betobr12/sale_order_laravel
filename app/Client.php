@@ -10,5 +10,9 @@ class Client extends Model
     {
         return $this->hasMany('App\Sale');
     }
+    public function sale()
+    {
+        return $this->hasOne('App\Sale');
+    }
 
 }

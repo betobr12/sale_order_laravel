@@ -10,8 +10,14 @@
 
 @section('content')
 
+
 <div class="container">
-    <form action="{{ route('sale.update', $sale->id) }}" method="POST">
+    <div class="jumbotron">
+    <p class="lead">Codigo da Venda - {{ $sale->id}}</p>
+    <h1 class="display-4">{{ $sale->client->name}}</h1>
+      <p class="lead">Valor total da Venda = </p>
+      <hr class="my-4">
+      <form action="{{ route('sale.update', $sale->id) }}" method="POST">
         @method('PUT')
         @csrf
         <div class="form-row">
@@ -27,6 +33,46 @@
             <button type="submit" class="btn btn-primary">Inserir</button>
         </div>
       </form>
+
+    </div>
+  </div>
+
+</div>
+<div class="container">
+<div class="card" style="width: 50rem;">
+    <div class="card-body">
+      <h5 class="card-title mb-3">Adicionar Produtos</h5>
+      <h6 class="card-subtitle mb-3 text-muted">Adicione o produto inserindo as informações nos campos abaixo</h6>
+      <form action="{{ route('item.store') }}" method="POST">
+        @csrf
+        <div class="form-row">
+              <input type="hidden" name="sale_id" class="form-control" value="{{ $sale->id}}">
+          <div class="form-group col-md-6">
+            <label for="product_id">ID do Produto</label>
+            <select name="product_id" id="" class="form-control">
+                @foreach ($productList as $product)
+                    <option value="{{$product->id}}">{{$product->name}} / em estoque: {{$product->amount}}</option>
+                @endforeach
+
+            </select>
+
+          </div>
+        </div>
+        <div class="form-row">
+            <div class="form-group col-md-2">
+              <label for="sale_value">Valor</label>
+              <input type="text" name="sale_value" class="form-control" >
+            </div>
+            <div class="form-group col-md-2">
+              <label for="sale_amount">Qtde venda</label>
+              <input type="text" name="sale_amount" class="form-control">
+            </div>
+          </div>
+        <button type="submit" class="btn btn-primary">Cadastar</button>
+      </form>
+    </div>
+  </div>
+
 </div>
 <br>
 <div class="container">

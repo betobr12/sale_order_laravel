@@ -4,7 +4,9 @@ namespace App\Http\Controllers;
 
 use App\Client;
 use App\Item;
+use App\Product;
 use App\Sale;
+use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 
 class SaleController extends Controller
@@ -42,7 +44,11 @@ class SaleController extends Controller
      * @return \Illuminate\Http\Response
      */
     public function store(Request $request)
+
     {
+
+        $productList = Product::select('id','name')->get();
+
         $this->validate($request,[
          'client_id' => 'required'
         ]);
@@ -50,13 +56,14 @@ class SaleController extends Controller
         $sale = new Sale();
         $sale->client_id = $request->client_id;
         $sale->save();
-
         $idsale = $sale->id;
         $items = $sale->items();
-        //return redirect()->route('item.create',compact(['idsale']));
 
-        return view('dashboard.item.create',compact('sale','items'),compact(['idsale']));
+        Toastr::success('Venda Criada Com Sucesso Selecione-o abaixo para Finalizar a Venda','Successo');
 
+        return redirect()->back();
+
+        //return view('dashboard.item.create',compact('sale','items'),compact(['idsale','productList']));
 
 
     }
@@ -80,6 +87,7 @@ class SaleController extends Controller
      */
     public function edit($id)
     {
+        $productList = Product::select('id','name','amount')->get();
         $sale = Sale::find($id);
 
         $client = $sale->client()->get();
@@ -90,7 +98,7 @@ class SaleController extends Controller
         $sale = Sale::find($id);
         $items =  $sale->items()->get();
 
-       return view('dashboard.sale.edit',compact('sale','items'), compact(['clientTarget', 'clientList']));
+       return view('dashboard.sale.edit',compact('sale','items'), compact(['clientTarget', 'clientList','productList']));
     }
 
     /**
@@ -106,7 +114,10 @@ class SaleController extends Controller
             $sale = Sale::find($id);
             $sale->client_id = $request->client_id;
             $sale->save();
-            return redirect()->back();
+
+
+        Toastr::success('Cliente alterado com sucesso','Successo');
+        return redirect()->back();
         }
     }
 
@@ -120,6 +131,7 @@ class SaleController extends Controller
     {
         $sale = Sale::findOrFail($id);
         $sale->delete();
+        Toastr::success('Venda Excluida com Sucesso','Successo');
         return redirect()->back();
     }
 }

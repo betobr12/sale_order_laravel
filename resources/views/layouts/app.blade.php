@@ -6,6 +6,7 @@
     <meta http-equiv="X-UA-Compatible" content="ie=edge">
 
     <link rel="stylesheet" href="{{ asset('site/style.css') }}">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
 
     <title>Dashboard</title>
 </head>
@@ -76,6 +77,8 @@
 <script src="{{ asset('site/bootstrap.js') }}"></script>
 <script src="{{ asset('site/feather.min.js') }}"></script>
 <script src="{{ asset('site/dashboard.js') }}"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+{!! Toastr::message() !!}
 
 </body>
 </html>
