@@ -87,18 +87,26 @@ class SaleController extends Controller
      */
     public function edit($id)
     {
-        $productList = Product::select('id','name','amount')->get();
+
         $sale = Sale::find($id);
+        if($sale->is_approved == 0){
+        $productList = Product::select('id','name','amount')->get();
 
         $client = $sale->client()->get();
         $clientTarget = Client::findOrFail($sale->client_id);
         $clientList = Client::select('id','name')->get();
 
-
         $sale = Sale::find($id);
         $items =  $sale->items()->get();
 
-       return view('dashboard.sale.edit',compact('sale','items'), compact(['clientTarget', 'clientList','productList']));
+        return view('dashboard.sale.edit',compact('sale','items'), compact(['clientTarget', 'clientList','productList']));
+        }else{
+            Toastr::error('Venda aprovada não pode ser alterada','Alerta');
+            return redirect()->back();
+
+        }
+
+
     }
 
     /**
@@ -114,10 +122,8 @@ class SaleController extends Controller
             $sale = Sale::find($id);
             $sale->client_id = $request->client_id;
             $sale->save();
-
-
-        Toastr::success('Cliente alterado com sucesso','Successo');
-        return redirect()->back();
+            Toastr::success('Cliente alterado com sucesso','Successo');
+            return redirect()->back();
         }
     }
 
@@ -130,8 +136,15 @@ class SaleController extends Controller
     public function destroy($id)
     {
         $sale = Sale::findOrFail($id);
+        if($sale->is_approved == 0){
         $sale->delete();
-        Toastr::success('Venda Excluida com Sucesso','Successo');
+        Toastr::success('Venda excluida com sucesso','Successo');
         return redirect()->back();
+        }else{
+        Toastr::error('Esta venda foi concluida e não pode ser excluida','Alerta');
+        return redirect()->back();
+
+    }
+
     }
 }

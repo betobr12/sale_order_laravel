@@ -36,6 +36,12 @@
                   </a>
                 </li>
                 <li class="nav-item">
+                    <a class="nav-link" href="{{ route('item.index') }}">
+                      <span data-feather="file"></span>
+                     Itens Vendidos
+                    </a>
+                  </li>
+                <li class="nav-item">
                   <a class="nav-link" href="{{ route('client.index') }}">
                     <span data-feather="users"></span>
                    Lista Clientes
@@ -72,6 +78,8 @@
           </main>
         </div>
       </div>
+      @include('layouts.footer')
+
 
 <script src="{{ asset('site/jquery.js') }}"></script>
 <script src="{{ asset('site/bootstrap.js') }}"></script>

@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Product;
+use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
 
 class ProductController extends Controller
@@ -49,7 +50,7 @@ class ProductController extends Controller
         $product->value = $request->value;
         $product->amount = $request->amount;
         $product->save();
-
+        Toastr::success('Produto criado com Sucesso','Successo');
         return redirect()->route('product.index');
     }
 
@@ -92,7 +93,7 @@ class ProductController extends Controller
         $product->value = $request->value;
         $product->amount = $request->amount;
         $product->save();
-
+        Toastr::success('Produto alterado com Sucesso','Successo');
         return redirect()->route('product.index');
     }
 

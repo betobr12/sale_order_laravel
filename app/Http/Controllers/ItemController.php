@@ -18,7 +18,9 @@ class ItemController extends Controller
      */
     public function index()
     {
-        //
+        $items = Item::all();
+
+        return view('dashboard.item.index',compact('items'));
     }
 
     /**
@@ -64,8 +66,7 @@ class ItemController extends Controller
 
            // return view('dashboard.item.create',compact('sale','idsale','items',['productList']));
            Toastr::success('Item incluido na venda com sucesso','Successo');
-
-            return redirect()->back();
+          return redirect()->back();
 
 
     }
@@ -108,7 +109,7 @@ class ItemController extends Controller
         $item->sale_value = $request->sale_value;
         $item->sale_amount = $request->sale_amount;
         $item->save();
-
+        Toastr::success('Item Alterado com Suceso','Successo');
         return redirect()->back();
     }
 
@@ -120,8 +121,9 @@ class ItemController extends Controller
      */
     public function destroy($id)
     {
-
-
-        Toastr::success('Item incluido na venda com sucesso','Successo');
+        $item = Item::findOrFail($id);
+        $item->delete();
+        Toastr::success('Item Excluido com Sucesso','Successo');
+        return redirect()->back();
     }
 }

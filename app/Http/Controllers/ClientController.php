@@ -50,7 +50,7 @@ class ClientController extends Controller
         $client->docs = $request->docs;
         $client->slug = Str::slug($request->name . $request->docs);
         $client->save();
-
+        Toastr::success('Cliente criado com Sucesso','Successo');
         return redirect()->route('client.index');
 
 
@@ -93,6 +93,7 @@ class ClientController extends Controller
         $client->docs = $request->docs;
         $client->slug = Str::slug($request->name . $request->docs);
         $client->save();
+        Toastr::success('Cliente Alterado com Sucesso','Successo');
         return redirect()->route('client.index');
     }
 
@@ -105,13 +106,18 @@ class ClientController extends Controller
     public function destroy($id)
     {
         $client = Client::findOrFail($id);
-        $clientdel = $client->sale->id;
-        if($clientdel > 0){
-         Toastr::error('Cliente Possui uma venda e nao pode ser excluido','Alerta');
+
+        return $client_delete = $client->sale->client_id;
+
+        if( $client_delete == 0){
+            $client = Client::findOrFail($id);
+            $client->delete();
+            Toastr::success('Cliente excluido com sucesso','Successo');
+            return redirect()->back();
         }else{
-        $client->delete();
-        Toastr::success('Cliente excluido com sucesso','Successo');
-        return redirect()->back();
+            Toastr::error('Cliente Possui uma venda e nao pode ser excluido','Alerta');
+            return redirect()->back();
+
     }
     }
 }

@@ -23,7 +23,7 @@
         <div class="form-row">
         <div class="col-md-6">
             <div class="form-group">
-                <label for="id">Cliente</label>
+                <label for="id">Editar Cliente</label>
                         <select name="client_id" id="" class="form-control">
                             @foreach ($clientList as $client)
                                 <option value="{{$client->id}}" @if($clientTarget->id==$client->id) selected @endif>{{$client->name}}</option>
@@ -106,7 +106,12 @@
                 <td>{{ $sale->created_at }}</td>
                 <td>
                     <a href="{{route('item.edit', $item->id)}}"  class="btn btn-primary">Alterar</a>
-                    <input class="btn btn-danger" type="submit" value="Excluir">
+                    <form style="display: inline-block;" method="POST" action="{{route('item.destroy', $item->id)}}" data-toggle="tooltip" data-placement="top" title="Excluir" onsubmit="return confirm('Confirma exclusão?')">
+                        {{method_field('DELETE')}}{{ csrf_field() }}
+                             <button class="btn btn-danger" type="submit">
+                                 Excluir
+                             </button>
+                        </form>
 
                 </td>
               </tr>
