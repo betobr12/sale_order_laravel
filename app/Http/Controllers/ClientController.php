@@ -44,9 +44,13 @@ class ClientController extends Controller
         $this->validate($request,[
             'name' => 'required',
             'docs' => 'required'
-        ],[
-            'name' => 'Preencher nome',
+        ],
+        [
+         'name.required' => 'Campo Empresa esta vazio',
+         'docs.required' => 'O campo CNPJ/CPF esta vazio'
         ]);
+
+
         $client = new Client();
         $client->name = $request->name;
         $client->docs = $request->docs;
@@ -90,6 +94,11 @@ class ClientController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->validate($request,[
+            'name' => 'required',
+            'docs' => 'required'
+        ]);
+
         $client = Client::find($id);
         $client->name = $request->name;
         $client->docs = $request->docs;

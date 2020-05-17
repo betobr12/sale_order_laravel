@@ -43,7 +43,12 @@ class ProductController extends Controller
             'description' => 'required',
             'value' => 'required',
             'amount' => 'required'
-        ]);
+        ],[
+            'name.required' => 'Inserir nome para o produto',
+            'description.required' => 'Inserir descrição',
+            'value.required' => 'Inserir um valor',
+            'amount.required' => 'Inserir quantidade para o estoque'
+           ]);
         $product = new Product();
         $product->name = $request->name;
         $product->description = $request->description;
@@ -87,6 +92,13 @@ class ProductController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+        $this->validate($request,[
+            'name' => 'required',
+            'description' => 'required',
+            'value' => 'required',
+            'amount' => 'required'
+        ]);
         $product = Product::find($id);
         $product->name = $request->name;
         $product->description = $request->description;

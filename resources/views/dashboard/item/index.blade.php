@@ -28,13 +28,19 @@
         <tbody>
             @foreach ($items as $key=>$item)
             <tr>
-                <td>{{ $key + 1 }}</td>
-                <td>{{ $item->sale->client->name }}</td>
+                <td><b>{{ $key + 1 }}</b></td>
+                <td>{{ Str::limit($item->sale->client->name,20) }}</td>
                 <td>{{ $item->sale->id }}</td>
                 <td>{{ $item->product->name }}</td>
                 <td>{{ number_format($item->sale_value, 2, ',', '.') }}</td>
                 <td>{{ $item->sale_amount }}</td>
-                <td>{{ $item->sale->is_approved}}</td>
+                <td>
+                    @if ($item->sale->is_approved == 1)
+                   <b >Venda concluida</b>
+                @else
+                    <b>Aguardando Finalização</b>
+                @endif
+                </td>
                 <td>{{ $item->created_at }}</td>
 
                 <td>

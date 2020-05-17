@@ -11,6 +11,14 @@
 @section('content')
 
 <div class="container">
+
+    @if (isset($errors) && count($errors) > 0)
+    <div class="alert alert-danger">
+        @foreach ($errors->all() as $error)
+            <p>{{ $error }}</p>
+        @endforeach
+    </div>
+    @endif
     <form action="{{ route('product.store') }}" method="POST">
         @csrf
         <div class="form-row">

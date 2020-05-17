@@ -94,6 +94,7 @@ class SaleController extends Controller
         $sale = Sale::find($id);
 
         if($sale->is_approved == 0){
+
         $productList = Product::select('id','name','amount')->get();
 
         $client = $sale->client()->get();
@@ -102,7 +103,6 @@ class SaleController extends Controller
 
         $sale = Sale::find($id);
         $items =  $sale->items()->latest()->get();
-
         $result = $items->sum('sale_value');
 
         return view('dashboard.sale.edit',compact('sale','items'), compact(['clientTarget', 'clientList','productList','result']));

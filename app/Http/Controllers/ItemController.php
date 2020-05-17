@@ -51,6 +51,10 @@ class ItemController extends Controller
             'sale_value' => 'required',
             'sale_amount' => 'required'
 
+           ],[
+            'product_id.required' => 'Inserir Produto',
+            'sale_value.required' => 'Inserir valor do',
+            'sale_amount.required' => 'Inserir quantidade do produto'
            ]);
 
            $item = new Item();
@@ -112,7 +116,10 @@ class ItemController extends Controller
     public function edit($id)
     {
         $item = Item::find($id);
-        return view('dashboard.item.edit', compact('item'));
+
+        $productTarget = Item::findOrFail($item->id);
+        $productList = Product::select('id','name')->get();
+        return view('dashboard.item.edit', compact('item'),compact(['productTarget','productList']));
     }
 
     /**
@@ -124,14 +131,27 @@ class ItemController extends Controller
      */
     public function update(Request $request, $id)
     {
+        $this->validate($request,[
+
+            'product_id' => 'required',
+            'sale_id' => 'required',
+            'sale_value' => 'required',
+            'sale_amount' => 'required'
+
+           ]);
+
         $item = Item::find($id);
         $item->product_id = $request->product_id;
         $item->sale_id = $request->sale_id;
         $item->sale_value = $request->sale_value;
         $item->sale_amount = $request->sale_amount;
         $item->save();
+
+        $items = Item::all();
+
         Toastr::success('Item Alterado com Suceso','Successo');
         return redirect()->back();
+
     }
 
     /**

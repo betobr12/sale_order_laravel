@@ -7,17 +7,13 @@
 
     <link rel="stylesheet" href="{{ asset('site/style.css') }}">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.css">
-
     <title>Dashboard</title>
 </head>
 <body>
-
     <nav class="navbar navbar-dark fixed-top bg-primary flex-md-nowrap p-0 shadow">
         <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="">Gerenciador de Vendas</a>
         <input class="form-control form-control-dark w-100" type="text" placeholder="Buscar venda por cliente" aria-label="Search">
-
       </nav>
-
       <div class="container-fluid">
         <div class="row">
           <nav class="col-md-2 d-none d-md-block bg-light sidebar">
@@ -66,14 +62,11 @@
                   <a href="{{ route('product.create') }}" class="btn btn-sm btn-outline-secondary">Criar Produto</a>
                   <a href="{{ route('sale.create') }}" class="btn btn-sm btn-outline-secondary">Criar uma Venda</a>
                   <a href="{{ route('dashboard.index') }}" class="btn btn-sm btn-outline-secondary">Home</a>
-
                 </div>
-
               </div>
             </div>
 
            @yield('content')
-
 
           </main>
         </div>
@@ -123,25 +116,6 @@
         })
     }
 </script>
-
-<script language="javascript" type="text/javascript">
-    function validate() {
-    var name = client.name.value;
-    var docs = client.docs.value;
-
-    if (name == "") {
-    alert('Preencha o campo com Empresa');
-    client.name.focus();
-    return false;
-    }
-    if (docs == "") {
-    alert('Preencha o campo com CNPJ ou CPF');
-    client.docs.focus();
-    return false;
-    }
-    }
-    </script>
-
 
 </body>
 </html>

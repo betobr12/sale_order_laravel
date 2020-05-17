@@ -10,8 +10,11 @@
 
 @section('content')
 
+
+
+
 <div class="container">
-    <form action="{{ route('client.update', $client->id) }}" method="POST">
+    <form name="clientAlt" action="{{ route('client.update', $client->id) }}" method="POST">
         @method('PUT')
         @csrf
         <div class="form-row">
@@ -24,7 +27,7 @@
             <input type="text" name="docs" class="form-control" value="{{ $client->docs }}">
           </div>
         </div>
-        <button type="submit" class="btn btn-primary">Cadastar</button>
+        <button type="submit" class="btn btn-primary" onclick="return validate()">Cadastar</button>
       </form>
 </div>
 

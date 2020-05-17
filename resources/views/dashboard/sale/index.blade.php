@@ -28,11 +28,17 @@
         <tbody>
             @foreach ($sales as $key=>$sale)
             <tr>
-                <td>{{ $key + 1 }}</td>
+                <td><b>{{ $key + 1 }}</b></td>
                 <td>{{ $sale->id }}</td>
-                <td>{{ Str::limit($sale->client->name,'20') }}</td>
+                <td>{{ Str::limit($sale->client->name,20) }}</td>
                 <td>{{ number_format($sale->total, 2, ',', '.') }}</td>
-                <td>{{ $sale->is_approved }}</td>
+                <td
+                    @if ($sale->is_approved == 1)
+                    <span class="bg-info text-white"><b>Venda concluida</b></span>
+                @else
+                    <span class="bg-success text-white"><b >Aguardando finalização</b></span>
+                @endif
+                </td>
                 <td>{{ $sale->created_at }}</td>
 
                 <td>

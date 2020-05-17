@@ -10,7 +10,19 @@
 
 @section('content')
 
+
+    @if (isset($errors) && count($errors) > 0)
+    <div class="alert alert-danger">
+        @foreach ($errors->all() as $error)
+            <p>{{ $error }}</p>
+        @endforeach
+    </div>
+    @endif
+
+
+
 <div class="container">
+
     <form name="client" action="{{ route('client.store') }}" method="POST">
         @csrf
         <div class="form-row">
@@ -23,7 +35,7 @@
             <input type="text"  name="docs" class="form-control" >
           </div>
         </div>
-        <button type="submit" class="btn btn-primary" onclick="return validate()">Cadastar</button>
+        <button type="submit" class="btn btn-primary" >Cadastar</button>
       </form>
 </div>
 

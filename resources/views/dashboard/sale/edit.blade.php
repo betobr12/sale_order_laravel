@@ -8,15 +8,16 @@
 
 @endpush
 
+
+
 @section('content')
 
 
 <div class="container">
-
-    <div class="jumbotron">
-    <p class="lead">Codigo da Venda - {{ $sale->id}}</p>
+    <div class="jumbotron  bg-info text-white">
+    <p class="lead"><b>Codigo da Venda - {{ $sale->id}}</b></p>
     <h1 class="display-4">{{ $sale->client->name}}</h1>
-      <p class="lead">Valor total da Venda = R$ {{number_format($result, 2, ',', '.')}} </p>
+    <p class="lead">Valor total da Venda = R$ {{number_format($result, 2, ',', '.')}} </p>
       <hr class="my-4">
       <form action="{{ route('sale.update', $sale->id) }}" method="POST">
         @method('PUT')
@@ -47,11 +48,15 @@
       <button type="submit" class="btn btn-primary">Finalizar</button>
     </div>
 </div>
-
-
-
 <div class="container">
-<div class="card" style="width: 50rem;">
+    @if (isset($errors) && count($errors) > 0)
+<div class="alert alert-danger">
+    @foreach ($errors->all() as $error)
+        <p>{{ $error }}</p>
+    @endforeach
+</div>
+@endif
+<div class="card bg-info text-white" style="width: 50rem;">
     <div class="card-body">
       <h5 class="card-title mb-3">Adicionar Produtos</h5>
       <h6 class="card-subtitle mb-3 text-muted">Adicione o produto inserindo as informações nos campos abaixo</h6>
@@ -65,9 +70,7 @@
                 @foreach ($productList as $product)
                     <option value="{{$product->id}}">{{$product->name}} / em estoque: {{$product->amount}}</option>
                 @endforeach
-
             </select>
-
           </div>
         </div>
         <div class="form-row">
@@ -80,7 +83,7 @@
               <input type="text" name="sale_amount" class="form-control">
             </div>
           </div>
-        <button type="submit" class="btn btn-primary">Cadastar</button>
+        <button type="submit" class="btn btn-primary">Incluir</button>
       </form>
     </div>
   </div>
@@ -89,7 +92,7 @@
 <br>
 <div class="container">
 
-    <table class="table table-hover table-bordered">
+    <table class="table table-hover table-bordered ">
         <thead>
           <tr>
             <th scope="col">#</th>
@@ -105,8 +108,9 @@
           </tr>
         </thead>
         <tbody>
-
-            <span>Valor total do orçamento: R$ {{number_format($result, 2, ',', '.')}}</span>
+            <div class="p-3 mb-2 bg-info text-white">
+            <span><b>Valor total do orçamento: R$ {{number_format($result, 2, ',', '.')}}</b></span>
+            </div>
             @foreach ($items as $key=>$item)
 
               <tr>
@@ -119,8 +123,6 @@
                 <td>{{ $item->product->amount }}</td>
                 <td>{{ $sale->created_at }}</td>
                 <td>
-                    <a href="{{route('item.edit', $item->id)}}"  class="btn btn-primary">Alterar</a>
-
                     <button class="btn btn-danger" type="button" onclick="deleteAll({{ $item->id }})">
                         Excluir
                     </button>
