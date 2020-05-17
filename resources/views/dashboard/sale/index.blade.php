@@ -42,6 +42,7 @@
                 <td>{{ $sale->created_at }}</td>
 
                 <td>
+                    <a href="{{route('sale.show', $sale->id)}}" class="btn btn-primary">Mostrar</a>
                     <a href="{{route('sale.edit', $sale->id)}}" class="btn btn-primary">Alterar</a>
                     <button class="btn btn-danger" type="button" onclick="deleteAll({{ $sale->id }})">
                         Excluir

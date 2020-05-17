@@ -79,8 +79,16 @@ class SaleController extends Controller
      */
     public function show($id)
     {
-        //
+        $sale = Sale::find($id);
+        $client = $sale->client()->get();
+        $items =  $sale->items()->latest()->get();
+        $result = $items->sum('sale_value');
+
+        return view('dashboard.sale.show',compact('sale','items'), compact(['result']));
+
     }
+
+
 
     /**
      * Show the form for editing the specified resource.
@@ -94,17 +102,13 @@ class SaleController extends Controller
         $sale = Sale::find($id);
 
         if($sale->is_approved == 0){
-
         $productList = Product::select('id','name','amount')->get();
-
         $client = $sale->client()->get();
         $clientTarget = Client::findOrFail($sale->client_id);
         $clientList = Client::select('id','name')->get();
-
         $sale = Sale::find($id);
         $items =  $sale->items()->latest()->get();
         $result = $items->sum('sale_value');
-
         return view('dashboard.sale.edit',compact('sale','items'), compact(['clientTarget', 'clientList','productList','result']));
         }else{
             Toastr::error('Venda aprovada não pode ser alterada','Alerta');
