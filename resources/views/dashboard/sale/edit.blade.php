@@ -12,14 +12,16 @@
 
 
 <div class="container">
+
     <div class="jumbotron">
     <p class="lead">Codigo da Venda - {{ $sale->id}}</p>
     <h1 class="display-4">{{ $sale->client->name}}</h1>
-      <p class="lead">Valor total da Venda = </p>
+      <p class="lead">Valor total da Venda = R$ {{number_format($result, 2, ',', '.')}} </p>
       <hr class="my-4">
       <form action="{{ route('sale.update', $sale->id) }}" method="POST">
         @method('PUT')
         @csrf
+        <input type="hidden" name="total" class="form-control" value="{{ $result }}">
         <div class="form-row">
         <div class="col-md-6">
             <div class="form-group">
@@ -29,15 +31,25 @@
                                 <option value="{{$client->id}}" @if($clientTarget->id==$client->id) selected @endif>{{$client->name}}</option>
                             @endforeach
                         </select>
-            </div>
-            <button type="submit" class="btn btn-primary">Inserir</button>
+
+        </div>
+    </div>
+    <div class="form-group col-md-4">
+        <label for="is_approved"><b>Status</b></label>
+        <select name="is_approved" id="is_approved" class="form-control">
+          <option value="0">Pendente</option>
+          <option value="1">Aprovado</option>
+        </select>
+    </div>
+    <p class="lead">Mudando o status para "Aprovado", nada mais poderá ser alterado, inclua os itens abaixo antes de finaliza-la </p>
         </div>
       </form>
-
+      <button type="submit" class="btn btn-primary">Finalizar</button>
     </div>
-  </div>
-
 </div>
+
+
+
 <div class="container">
 <div class="card" style="width: 50rem;">
     <div class="card-body">
@@ -93,25 +105,29 @@
           </tr>
         </thead>
         <tbody>
+
+            <span>Valor total do orçamento: R$ {{number_format($result, 2, ',', '.')}}</span>
             @foreach ($items as $key=>$item)
 
               <tr>
                 <td>{{ $key + 1 }}</td>
                 <td>{{ $item->id }}</td>
                 <td>{{ $item->product->name }}</td>
-                <td>{{ $item->product->value }}</td>
-                <td>{{ $item->sale_value }}</td>
-                <td>{{ $item->sale_value }}</td>
+                <td>{{ number_format($item->product->value, 2, ',', '.') }}</td>
+                <td>{{ number_format($item->sale_value, 2, ',', '.')  }}</td>
+                <td>{{ $item->sale_amount }}</td>
                 <td>{{ $item->product->amount }}</td>
                 <td>{{ $sale->created_at }}</td>
                 <td>
                     <a href="{{route('item.edit', $item->id)}}"  class="btn btn-primary">Alterar</a>
-                    <form style="display: inline-block;" method="POST" action="{{route('item.destroy', $item->id)}}" data-toggle="tooltip" data-placement="top" title="Excluir" onsubmit="return confirm('Confirma exclusão?')">
-                        {{method_field('DELETE')}}{{ csrf_field() }}
-                             <button class="btn btn-danger" type="submit">
-                                 Excluir
-                             </button>
-                        </form>
+
+                    <button class="btn btn-danger" type="button" onclick="deleteAll({{ $item->id }})">
+                        Excluir
+                    </button>
+                    <form id="delete-form-{{ $item->id }}" action="{{ route('item.destroy',$item->id) }}" method="POST" style="display: none;">
+                        @csrf
+                        @method('DELETE')
+                    </form>
 
                 </td>
               </tr>

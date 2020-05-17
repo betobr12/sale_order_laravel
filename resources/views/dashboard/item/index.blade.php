@@ -32,19 +32,21 @@
                 <td>{{ $item->sale->client->name }}</td>
                 <td>{{ $item->sale->id }}</td>
                 <td>{{ $item->product->name }}</td>
-                <td>{{ $item->sale_value }}</td>
+                <td>{{ number_format($item->sale_value, 2, ',', '.') }}</td>
                 <td>{{ $item->sale_amount }}</td>
                 <td>{{ $item->sale->is_approved}}</td>
                 <td>{{ $item->created_at }}</td>
+
                 <td>
                     <a href="{{route('item.edit', $item->id)}}" class="btn btn-primary">Alterar</a>
 
-                    <form style="display: inline-block;" method="POST" action="{{route('item.destroy', $item->id)}}" data-toggle="tooltip" data-placement="top" title="Excluir" onsubmit="return confirm('Confirma exclusão?')">
-                        {{method_field('DELETE')}}{{ csrf_field() }}
-                             <button class="btn btn-danger" type="submit">
-                                 Excluir
-                             </button>
-                         </form>
+                    <button class="btn btn-danger" type="button" onclick="deleteAll({{ $item->id }})">
+                        Excluir
+                    </button>
+                    <form id="delete-form-{{ $item->id }}" action="{{ route('item.destroy',$item->id) }}" method="POST" style="display: none;">
+                        @csrf
+                        @method('DELETE')
+                    </form>
 
                 </td>
 

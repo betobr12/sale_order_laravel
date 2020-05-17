@@ -28,17 +28,19 @@
             <tr>
 
                 <td>{{ $key + 1 }}</td>
-                <td>{{ $client->name }}</td>
-                <td>{{ $client->slug }}</td>
+                <td>{{ Str::limit($client->name,40) }}</td>
+                <td>{{ Str::limit($client->slug,10) }}</td>
                 <td>{{ $client->docs }}</td>
                 <td>
-                    <a href="{{route('client.edit',$client->id)}}" class="btn btn-primary">Alterar</a>
-                    <form style="display: inline-block;" method="POST" action="{{route('client.destroy', $client->id)}}" data-toggle="tooltip" data-placement="top" title="Excluir" onsubmit="return confirm('Confirma exclusão?')">
-                        {{method_field('DELETE')}}{{ csrf_field() }}
-                             <button class="btn btn-danger" type="submit">
-                                 Excluir
-                             </button>
-                        </form>
+                    <a href="{{route('client.edit', $client->id)}}" class="btn btn-primary">Alterar</a>
+
+                    <button class="btn btn-danger" type="button" onclick="deleteAll({{ $client->id }})">
+                        Excluir
+                    </button>
+                    <form id="delete-form-{{ $client->id }}" action="{{ route('client.destroy',$client->id) }}" method="POST" style="display: none;">
+                        @csrf
+                        @method('DELETE')
+                    </form>
                 </td>
               </tr>
 

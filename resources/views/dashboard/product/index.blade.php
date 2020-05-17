@@ -30,13 +30,19 @@
             <tr>
                 <td>{{ $key + 1 }}</td>
                 <td>{{ $product->name }}</td>
-                <td>{{ $product->description }}</td>
-                <td>{{ $product->value }}</td>
+                <td>{{ Str::limit($product->description,12) }}</td>
+                <td>{{ number_format($product->value, 2, ',', '.') }}</td>
                 <td>{{ $product->amount }}</td>
                 <td>{{ $product->created_at }}</td>
                 <td>
                     <a href="{{route('product.edit',$product->id)}}" class="btn btn-primary">Alterar</a>
-                    <input class="btn btn-danger" type="submit" value="Excluir">
+                    <button class="btn btn-danger" type="button" onclick="deleteAll({{ $product->id }})">
+                        Excluir
+                    </button>
+                    <form id="delete-form-{{ $product->id }}" action="{{ route('product.destroy',$product->id) }}" method="POST" style="display: none;">
+                        @csrf
+                        @method('DELETE')
+                    </form>
                 </td>
               </tr>
 

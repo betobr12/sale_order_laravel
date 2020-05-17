@@ -105,6 +105,18 @@ class ProductController extends Controller
      */
     public function destroy($id)
     {
-        //
+
+        $product = Product::findOrFail($id);
+
+        $item_count = $product->item()->count(['product_id']);
+
+        if( $item_count == 0){
+        $product->delete();
+        Toastr::success('Produto Excluido com Sucesso','Successo');
+        return redirect()->back();
+        }else{
+            Toastr::error('Produto em uma venda','Alerta');
+            return redirect()->back();
+        }
     }
 }

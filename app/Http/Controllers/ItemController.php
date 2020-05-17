@@ -8,6 +8,7 @@ use App\Sale;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Database\Console\Migrations\RefreshCommand;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class ItemController extends Controller
 {
@@ -53,6 +54,25 @@ class ItemController extends Controller
            ]);
 
            $item = new Item();
+        /*
+          // $product = $request->product_id;
+             $product_id = $request->get('product_id');
+
+            return $result = DB::table('items')
+            ->where('product_id', 'like', "%$product_id%")
+            ->get();
+
+
+
+            if($result == $request->product_id ){
+                Toastr::error('Produto repitido','Alerta');
+                return redirect()->back();
+            }else{
+
+           $item->product_id = $request->product_id;
+            }
+
+        */
            $item->product_id = $request->product_id;
            $item->sale_id = $request->sale_id;
            $item->sale_value = $request->sale_value;
@@ -63,6 +83,7 @@ class ItemController extends Controller
           $sale = Sale::find($idsale);
           $items =  $sale->items()->get();
           $productList = Product::select('id','name')->get();
+
 
            // return view('dashboard.item.create',compact('sale','idsale','items',['productList']));
            Toastr::success('Item incluido na venda com sucesso','Successo');
@@ -121,9 +142,16 @@ class ItemController extends Controller
      */
     public function destroy($id)
     {
-        $item = Item::findOrFail($id);
-        $item->delete();
-        Toastr::success('Item Excluido com Sucesso','Successo');
-        return redirect()->back();
+            $item = Item::findOrFail($id);
+
+            if($item->sale->is_approved == 1){
+            Toastr::error('Item corresponde a uma venda Aprovada','Alerta');
+            return redirect()->back();
+            }else{
+            $item->delete();
+            Toastr::success('Item Excluido com Sucesso','Successo');
+            return redirect()->back();
+    }
+
     }
 }

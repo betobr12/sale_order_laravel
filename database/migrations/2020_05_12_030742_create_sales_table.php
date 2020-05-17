@@ -19,7 +19,7 @@ class CreateSalesTable extends Migration
             $table->increments('id');
             $table->integer('client_id')->unsigned();
             $table->double('total',11.2)->default(0);
-            $table->boolean('is_approved')->default(false);
+            $table->double('is_approved')->default(0);
             $table->foreign('client_id')
             ->references('id')->on('clients')
             ->onDelete('cascade');

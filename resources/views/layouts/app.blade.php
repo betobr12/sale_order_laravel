@@ -88,5 +88,60 @@
 <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
 {!! Toastr::message() !!}
 
+<script src="{{ asset('site/sweetalert2.all.js') }}"></script>
+
+<script type="text/javascript">
+
+    function deleteAll(id) {
+        swal({
+            title: 'Deseja realmente excluir?',
+            text: "Escolha uma das opções abaixo:",
+            type: 'warning',
+            showCancelButton: true,
+            confirmButtonColor: '#3085d6',
+            cancelButtonColor: '#d33',
+            confirmButtonText: 'Sim, desejo excluir!',
+            cancelButtonText: 'Não, cancele!',
+            confirmButtonClass: 'btn btn-success',
+            cancelButtonClass: 'btn btn-danger',
+            buttonsStyling: false,
+            reverseButtons: true
+        }).then((result) => {
+            if (result.value) {
+                event.preventDefault();
+                document.getElementById('delete-form-'+id).submit();
+            } else if (
+                // Read more about handling dismissals
+                result.dismiss === swal.DismissReason.cancel
+            ) {
+                swal(
+                    'Cancelado',
+                    'Suas informações não foram excluidas :)',
+                    'error'
+                )
+            }
+        })
+    }
+</script>
+
+<script language="javascript" type="text/javascript">
+    function validate() {
+    var name = client.name.value;
+    var docs = client.docs.value;
+
+    if (name == "") {
+    alert('Preencha o campo com Empresa');
+    client.name.focus();
+    return false;
+    }
+    if (docs == "") {
+    alert('Preencha o campo com CNPJ ou CPF');
+    client.docs.focus();
+    return false;
+    }
+    }
+    </script>
+
+
 </body>
 </html>

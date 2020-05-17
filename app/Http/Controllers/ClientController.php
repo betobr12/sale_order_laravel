@@ -44,6 +44,8 @@ class ClientController extends Controller
         $this->validate($request,[
             'name' => 'required',
             'docs' => 'required'
+        ],[
+            'name' => 'Preencher nome',
         ]);
         $client = new Client();
         $client->name = $request->name;
@@ -105,12 +107,12 @@ class ClientController extends Controller
      */
     public function destroy($id)
     {
-        $client = Client::findOrFail($id);
+         $client = Client::findOrFail($id);
 
-        return $client_delete = $client->sale->client_id;
+         $sale_count = $client->sale()->count(['client_id']);
 
-        if( $client_delete == 0){
-            $client = Client::findOrFail($id);
+        if( $sale_count == 0){
+
             $client->delete();
             Toastr::success('Cliente excluido com sucesso','Successo');
             return redirect()->back();

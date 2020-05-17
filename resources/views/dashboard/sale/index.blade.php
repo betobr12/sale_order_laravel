@@ -18,7 +18,6 @@
             <th scope="col">#</th>
             <th scope="col">ID</th>
             <th scope="col">Cliente</th>
-            <th scope="col">Slug</th>
             <th scope="col">Total</th>
             <th scope="col">Status</th>
             <th scope="col">Data Criacao</th>
@@ -31,27 +30,23 @@
             <tr>
                 <td>{{ $key + 1 }}</td>
                 <td>{{ $sale->id }}</td>
-                <td>{{ $sale->client->name }}</td>
-                <td>{{ $sale->slug }}</td>
-                <td>{{ $sale->total }}</td>
+                <td>{{ Str::limit($sale->client->name,'20') }}</td>
+                <td>{{ number_format($sale->total, 2, ',', '.') }}</td>
                 <td>{{ $sale->is_approved }}</td>
                 <td>{{ $sale->created_at }}</td>
+
                 <td>
                     <a href="{{route('sale.edit', $sale->id)}}" class="btn btn-primary">Alterar</a>
-
-                    <form style="display: inline-block;" method="POST" action="{{route('sale.destroy', $sale->id)}}" data-toggle="tooltip" data-placement="top" title="Excluir" onsubmit="return confirm('Confirma exclusão?')">
-                        {{method_field('DELETE')}}{{ csrf_field() }}
-                             <button class="btn btn-danger" type="submit">
-                                 Excluir
-                             </button>
-                         </form>
-
+                    <button class="btn btn-danger" type="button" onclick="deleteAll({{ $sale->id }})">
+                        Excluir
+                    </button>
+                    <form id="delete-form-{{ $sale->id }}" action="{{ route('sale.destroy',$sale->id) }}" method="POST" style="display: none;">
+                        @csrf
+                        @method('DELETE')
+                    </form>
                 </td>
-
               </tr>
-
             @endforeach
-
 
         </tbody>
       </table>
@@ -62,6 +57,8 @@
 @endsection
 
 @push('js')
+
+
 
 
 @endpush

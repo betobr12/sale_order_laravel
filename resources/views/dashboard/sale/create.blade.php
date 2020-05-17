@@ -12,7 +12,7 @@
 <div class="container">
 <div class="jumbotron">
     <h1 class="display-4">Venda</h1>
-    <p class="lead">Selecione um cliente para criar a venda</p>
+    <p class="lead">Selecione um cliente para criar a venda, em seguida, selecione-o na lista abaixo para concluir a venda</p>
     <hr class="my-4">
     <form action="{{ route('sale.store') }}" method="POST">
         @csrf

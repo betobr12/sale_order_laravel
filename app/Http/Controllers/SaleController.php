@@ -32,7 +32,7 @@ class SaleController extends Controller
     public function create()
     {
         $idsale = 0;
-        $sales = Sale::all();
+        $sales = Sale::latest()->get();
         $clientList = Client::select('id','name')->get();
         return view('dashboard.sale.create',compact('sales'),compact(['clientList','idsale']));
     }
@@ -50,12 +50,15 @@ class SaleController extends Controller
         $productList = Product::select('id','name')->get();
 
         $this->validate($request,[
-         'client_id' => 'required'
+         'client_id' => 'required',
         ]);
+
+
 
         $sale = new Sale();
         $sale->client_id = $request->client_id;
         $sale->save();
+
         $idsale = $sale->id;
         $items = $sale->items();
 
@@ -89,6 +92,7 @@ class SaleController extends Controller
     {
 
         $sale = Sale::find($id);
+
         if($sale->is_approved == 0){
         $productList = Product::select('id','name','amount')->get();
 
@@ -97,9 +101,11 @@ class SaleController extends Controller
         $clientList = Client::select('id','name')->get();
 
         $sale = Sale::find($id);
-        $items =  $sale->items()->get();
+        $items =  $sale->items()->latest()->get();
 
-        return view('dashboard.sale.edit',compact('sale','items'), compact(['clientTarget', 'clientList','productList']));
+        $result = $items->sum('sale_value');
+
+        return view('dashboard.sale.edit',compact('sale','items'), compact(['clientTarget', 'clientList','productList','result']));
         }else{
             Toastr::error('Venda aprovada não pode ser alterada','Alerta');
             return redirect()->back();
@@ -119,11 +125,15 @@ class SaleController extends Controller
     public function update(Request $request, $id)
     {
         {
+            $sales = Sale::all();
             $sale = Sale::find($id);
             $sale->client_id = $request->client_id;
+            $sale->total = $request->total;
+            $sale->is_approved = $request->is_approved;
             $sale->save();
-            Toastr::success('Cliente alterado com sucesso','Successo');
-            return redirect()->back();
+            Toastr::success('Venda gerada','Successo');
+            //return redirect()->back();
+            return view('dashboard.sale.index',compact('sales'));
         }
     }
 

@@ -11,7 +11,7 @@
 @section('content')
 
 <div class="container">
-    <form action="{{ route('client.store') }}" method="POST">
+    <form name="client" action="{{ route('client.store') }}" method="POST">
         @csrf
         <div class="form-row">
           <div class="form-group col-md-6">
@@ -20,10 +20,10 @@
           </div>
           <div class="form-group col-md-6">
             <label for="docs">CNPJ/CPF</label>
-            <input type="text" name="docs" class="form-control">
+            <input type="text"  name="docs" class="form-control" >
           </div>
         </div>
-        <button type="submit" class="btn btn-primary">Cadastar</button>
+        <button type="submit" class="btn btn-primary" onclick="return validate()">Cadastar</button>
       </form>
 </div>
 
