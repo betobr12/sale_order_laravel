@@ -75,7 +75,7 @@
             </div>
             <div class="form-group col-md-2">
               <label for="sale_amount">Qtde venda</label>
-              <input type="text" name="sale_amount" class="form-control">
+              <input type="number" name="sale_amount" class="form-control">
             </div>
           </div>
         <button type="submit" class="btn btn-primary">Incluir</button>

@@ -25,13 +25,13 @@
             </div>
           </div>
           <div class="form-row">
-              <div class="form-group col-md-6">
+              <div class="form-group col-md-2">
                 <label for="valor">Valor</label>
                 <input type="text" name="value" class="form-control" value="{{ $product->value }}" >
               </div>
-              <div class="form-group col-md-6">
+              <div class="form-group col-md-2">
                 <label for="estoque">Estoque</label>
-                <input type="text" name="amount" class="form-control" value="{{ $product->amount }}">
+                <input type="number" name="amount" class="form-control" value="{{ $product->amount }}">
               </div>
             </div>
           <button type="submit" class="btn btn-primary">Cadastar</button>

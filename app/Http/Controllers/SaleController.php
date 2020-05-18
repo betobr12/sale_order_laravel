@@ -103,6 +103,7 @@ class SaleController extends Controller
         $sale = Sale::find($id);
 
         if($sale->is_approved == 0){
+
         $productList = Product::select('id','name','amount')->get();
         $client = $sale->client()->get();
         $clientTarget = Client::findOrFail($sale->client_id);
@@ -115,8 +116,7 @@ class SaleController extends Controller
 
          $result = $items->sum(['sale_value * sale_amount']);
 
-
-        return view('dashboard.sale.edit',compact('sale','items'), compact(['clientTarget', 'clientList','productList','result']));
+         return view('dashboard.sale.edit',compact('sale','items'), compact(['clientTarget', 'clientList','productList','result']));
         }else{
             Toastr::error('Venda aprovada não pode ser alterada','Alerta');
             return redirect()->back();

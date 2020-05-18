@@ -9,6 +9,7 @@ use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Database\Console\Migrations\RefreshCommand;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Str;
 
 class ItemController extends Controller
 {
@@ -53,8 +54,8 @@ class ItemController extends Controller
 
            ],[
             'product_id.required' => 'Inserir Produto',
-            'sale_value.required' => 'Inserir valor do',
-            'sale_amount.required' => 'Inserir quantidade do produto'
+            'sale_value.required' => 'Inserir um valor para o item',
+            'sale_amount.required' => 'Inserir quantidade para o item'
            ]);
 
            $item = new Item();
@@ -77,9 +78,10 @@ class ItemController extends Controller
             }
 
         */
+
            $item->product_id = $request->product_id;
            $item->sale_id = $request->sale_id;
-           $item->sale_value = $request->sale_value;
+           $item->sale_value = str_replace(",",".",$request->sale_value);
            $item->sale_amount = $request->sale_amount;
            $item->save();
 
@@ -143,7 +145,7 @@ class ItemController extends Controller
         $item = Item::find($id);
         $item->product_id = $request->product_id;
         $item->sale_id = $request->sale_id;
-        $item->sale_value = $request->sale_value;
+        $item->sale_value = str_replace(",",".",$request->sale_value);
         $item->sale_amount = $request->sale_amount;
         $item->save();
 

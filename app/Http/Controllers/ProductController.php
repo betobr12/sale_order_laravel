@@ -52,7 +52,7 @@ class ProductController extends Controller
         $product = new Product();
         $product->name = $request->name;
         $product->description = $request->description;
-        $product->value = $request->value;
+        $product->value = str_replace(",",".",$request->value);
         $product->amount = $request->amount;
         $product->save();
         Toastr::success('Produto criado com Sucesso','Successo');
@@ -102,7 +102,7 @@ class ProductController extends Controller
         $product = Product::find($id);
         $product->name = $request->name;
         $product->description = $request->description;
-        $product->value = $request->value;
+        $product->value = str_replace(",",".",$request->value);
         $product->amount = $request->amount;
         $product->save();
         Toastr::success('Produto alterado com Sucesso','Successo');
