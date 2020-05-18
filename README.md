@@ -1,11 +1,15 @@
 
 
-## About Laravel
-
-#composer update
-#npm install
+## INSTALANDO
+<br>
+#composer install
+<br>
 #configurar .env
-#php artisan migrate
+<br>
 #gerar uma APP_KEY -> comando: php artisan key:generate
+<br>
+<br>
+#php artisan migrate ->para instalar as tabelas do banco
+<br>
 
 <p>Xampp + MySQL</p>
