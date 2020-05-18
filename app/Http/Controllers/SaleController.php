@@ -8,6 +8,7 @@ use App\Product;
 use App\Sale;
 use Brian2694\Toastr\Facades\Toastr;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 
 class SaleController extends Controller
 {
@@ -20,8 +21,6 @@ class SaleController extends Controller
     {
         $sales = Sale::latest()->get();
         return view('dashboard.sale.index',compact('sales'));
-
-
     }
 
     /**
@@ -52,9 +51,6 @@ class SaleController extends Controller
         $this->validate($request,[
          'client_id' => 'required',
         ]);
-
-
-
         $sale = new Sale();
         $sale->client_id = $request->client_id;
         $sale->save();
@@ -82,7 +78,12 @@ class SaleController extends Controller
         $sale = Sale::find($id);
         $client = $sale->client()->get();
         $items =  $sale->items()->latest()->get();
-        $result = $items->sum('sale_value');
+
+        foreach ($items as $key=>$item)
+        {
+            $result = $item->sale_amount * $item->sale_value;
+        }
+
 
         return view('dashboard.sale.show',compact('sale','items'), compact(['result']));
 
@@ -108,7 +109,13 @@ class SaleController extends Controller
         $clientList = Client::select('id','name')->get();
         $sale = Sale::find($id);
         $items =  $sale->items()->latest()->get();
-        $result = $items->sum('sale_value');
+
+
+        // $consult = DB::table("items")->select(DB::raw("(sale_value * sale_amount) as totalSale"))->get();
+
+         $result = $items->sum(['sale_value * sale_amount']);
+
+
         return view('dashboard.sale.edit',compact('sale','items'), compact(['clientTarget', 'clientList','productList','result']));
         }else{
             Toastr::error('Venda aprovada não pode ser alterada','Alerta');

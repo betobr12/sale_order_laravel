@@ -14,5 +14,10 @@ class Client extends Model
     {
         return $this->hasOne('App\Sale');
     }
+    public function scopeSlug($query, $slug)
+    {
+        if($slug)
+            return $query->where('slug', 'LIKE', "%$slug%");
+    }
 
 }

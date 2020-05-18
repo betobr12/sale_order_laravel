@@ -7,12 +7,7 @@
 @push('css')
 
 @endpush
-
-
-
 @section('content')
-
-
 <div class="container">
     <div class="jumbotron  bg-info text-white">
     <p class="lead"><b>Codigo da Venda - {{ $sale->id}}</b></p>
@@ -44,8 +39,8 @@
     </div>
     <p class="lead">Mudando o status para "Aprovado", nada mais poderá ser alterado, inclua os itens abaixo antes de finaliza-la </p>
         </div>
+        <button type="submit" class="btn btn-primary">Finalizar</button>
       </form>
-      <button type="submit" class="btn btn-primary">Finalizar</button>
     </div>
 </div>
 <div class="container">
@@ -98,11 +93,10 @@
             <th scope="col">#</th>
             <th scope="col">ID</th>
             <th scope="col">Item</th>
-            <th scope="col">Vlr Cadastrado</th>
             <th scope="col">Vlr Venda</th>
             <th scope="col">Qtde Venda</th>
-            <th scope="col">Qtde Estoq</th>
             <th scope="col">Data Criacao</th>
+            <th scope="col">Total</th>
             <th scope="col">Funções</th>
 
           </tr>
@@ -117,11 +111,10 @@
                 <td>{{ $key + 1 }}</td>
                 <td>{{ $item->id }}</td>
                 <td>{{ $item->product->name }}</td>
-                <td>{{ number_format($item->product->value, 2, ',', '.') }}</td>
                 <td>{{ number_format($item->sale_value, 2, ',', '.')  }}</td>
                 <td>{{ $item->sale_amount }}</td>
-                <td>{{ $item->product->amount }}</td>
                 <td>{{ $sale->created_at }}</td>
+                <td>{{  number_format($item->sale_amount * $item->sale_value , 2, ',', '.')}}</td>
                 <td>
                     <button class="btn btn-danger" type="button" onclick="deleteAll({{ $item->id }})">
                         Excluir

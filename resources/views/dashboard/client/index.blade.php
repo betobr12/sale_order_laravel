@@ -12,6 +12,9 @@
 
 <div class="container">
     <h3>Lista de Clientes</h3>
+    <br>
+    <div><a href="{{ route('client.index') }}" class="btn btn-primary">Retornar valores da lista</a></div>
+    <br>
     <table class="table table-hover table-bordered">
         <thead>
           <tr>

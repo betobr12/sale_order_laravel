@@ -14,9 +14,15 @@ class ClientController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index()
+    public function index(Request $request)
     {
-        $clients = Client::latest()->get();
+       // $clients = Client::latest()->get();
+
+            $slug  = $request->get('slug');
+
+    	     $clients = Client::orderBy('id', 'DESC')
+    		->slug($slug)
+    		->paginate(20);
 
         return view('dashboard.client.index',compact('clients'));
     }

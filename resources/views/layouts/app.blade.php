@@ -12,7 +12,9 @@
 <body>
     <nav class="navbar navbar-dark fixed-top bg-primary flex-md-nowrap p-0 shadow">
         <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="">Gerenciador de Vendas</a>
-        <input class="form-control form-control-dark w-100" type="text" placeholder="Buscar venda por cliente" aria-label="Search">
+        <form method="GET" action="{{route('client.index')}}" enctype="multipart/form-data" class="form-inline pull-right">
+        <input class="form-control form-control-dark w-100" type="text" name="slug" placeholder="Buscar Cliente" aria-label="Search">
+        </form>
       </nav>
       <div class="container-fluid">
         <div class="row">
