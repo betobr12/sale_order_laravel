@@ -12,12 +12,12 @@
     <div class="jumbotron  bg-info text-white">
     <p class="lead"><b>Codigo da Venda - {{ $sale->id}}</b></p>
     <h1 class="display-4">{{ $sale->client->name}}</h1>
-    <p class="lead">Valor total da Venda = R$ {{number_format($result, 2, ',', '.')}} </p>
+    <p class="lead">Valor total da Venda = R$ {{number_format($total_price , 2, ',', '.')}} </p>
       <hr class="my-4">
       <form action="{{ route('sale.update', $sale->id) }}" method="POST">
         @method('PUT')
         @csrf
-        <input type="hidden" name="total" class="form-control" value="{{ $result }}">
+        <input type="hidden" name="total" class="form-control" value="{{ $total_price  }}">
         <div class="form-row">
         <div class="col-md-6">
             <div class="form-group">
@@ -103,7 +103,7 @@
         </thead>
         <tbody>
             <div class="p-3 mb-2 bg-info text-white">
-            <span><b>Valor total do orçamento: R$ {{number_format($result, 2, ',', '.')}}</b></span>
+            <span><b>Valor total do orçamento: R$ {{number_format($total_price , 2, ',', '.')}}</b></span>
             </div>
             @foreach ($items as $key=>$item)
 

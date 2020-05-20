@@ -112,11 +112,16 @@ class SaleController extends Controller
         $items =  $sale->items()->latest()->get();
 
 
-        // $consult = DB::table("items")->select(DB::raw("(sale_value * sale_amount) as totalSale"))->get();
-
-         $result = $items->sum(['sale_value * sale_amount']);
-
-         return view('dashboard.sale.edit',compact('sale','items'), compact(['clientTarget', 'clientList','productList','result']));
+         //return $result = DB::table("items")->where('sale_id',$id)->select(DB::raw('(sale_value * sale_amount) as totalSale'))->get();
+         $result = DB::table('items')->where('sale_id',$id)
+        //->select(DB::raw('SUM(sale_value * sale_amount) as totalSale'))
+        ->get();
+        $total_price = 0;
+        foreach ($result as $item){
+            $total_price+=$item->sale_value*$item->sale_amount;
+        }
+        $total_price;
+         return view('dashboard.sale.edit',compact('sale','items'), compact(['clientTarget', 'clientList','productList','total_price']));
         }else{
             Toastr::error('Venda aprovada não pode ser alterada','Alerta');
             return redirect()->back();
