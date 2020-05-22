@@ -58,32 +58,47 @@ class ItemController extends Controller
             'sale_amount.required' => 'Inserir quantidade para o item'
            ]);
 
+           //$amout_store =
+           $id_product = [0];
+           $amout_product = [0];
            $item = new Item();
-        /*
-          // $product = $request->product_id;
-             $product_id = $request->get('product_id');
-
-            return $result = DB::table('items')
-            ->where('product_id', 'like', "%$product_id%")
-            ->get();
-
-
-
-            if($result == $request->product_id ){
-                Toastr::error('Produto repitido','Alerta');
-                return redirect()->back();
-            }else{
-
-           $item->product_id = $request->product_id;
-            }
-
-        */
-
-           $item->product_id = $request->product_id;
            $item->sale_id = $request->sale_id;
-           $item->sale_value = str_replace(",",".",$request->sale_value);
-           $item->sale_amount = $request->sale_amount;
-           $item->save();
+           $item->product_id = $request->product_id;
+
+            $resultSale = $item->sale_id;
+            $resultProduct = $item->product_id;
+
+
+             $resultItems = Item::where('sale_id',$resultSale)->select('product_id')->get();
+            $resultStore = Product::where('id',$resultProduct)->select('amount')->get();
+
+           foreach ($resultItems as $item){
+            $id_product = $item->product_id;
+        }
+            foreach ($resultStore as $product){
+             $amout_product = $product->amount;
+         }
+
+         /*
+           if($request->product_id == $id_product ){
+
+            Toastr::error('produto já inserido','Alerta');
+            return redirect()->back();
+
+          }*/
+          if($request->sale_amount <=0 or $request->sale_amount > $amout_product ){
+
+            Toastr::error('Saldo divergente com o estoque','Alerta');
+            return redirect()->back();
+
+          }else{
+          $item = new Item();
+          $item->sale_id = $request->sale_id;
+          $item->product_id = $request->product_id;
+          $item->sale_value = str_replace(",",".",$request->sale_value);
+          $item->sale_amount = $request->sale_amount;
+          $item->save();
+
 
           $idsale = $item->sale_id;
           $sale = Sale::find($idsale);
@@ -94,6 +109,7 @@ class ItemController extends Controller
            // return view('dashboard.item.create',compact('sale','idsale','items',['productList']));
            Toastr::success('Item incluido na venda com sucesso','Successo');
           return redirect()->back();
+        }
 
 
     }
@@ -141,6 +157,9 @@ class ItemController extends Controller
             'sale_amount' => 'required'
 
            ]);
+
+
+
 
         $item = Item::find($id);
         $item->product_id = $request->product_id;
