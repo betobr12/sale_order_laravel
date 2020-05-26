@@ -102,7 +102,12 @@ class ItemController extends Controller
           $item->product_id = $request->product_id;
           $item->sale_value = str_replace(",",".",$request->sale_value);
           $item->sale_amount = $request->sale_amount;
-          $item->save();
+         // $item->save();
+           $product = $item->product;
+          if ($item->save()) {
+            $product->amount = $product->amount - $item->sale_amount;
+            $product->update();
+         }
 
 
           $idsale = $item->sale_id;
@@ -194,7 +199,13 @@ class ItemController extends Controller
             Toastr::error('Item corresponde a uma venda Aprovada','Alerta');
             return redirect()->back();
             }else{
-            $item->delete();
+           // $item->delete();
+            $product = $item->product;
+            if ($item->delete()) {
+              $product->amount = $product->amount + $item->sale_amount;
+              $product->update();
+           }
+
             Toastr::success('Item Excluido com Sucesso','Successo');
             return redirect()->back();
     }

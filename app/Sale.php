@@ -15,13 +15,21 @@ class Sale extends Model
     {
         return $this->hasMany('App\Item');
     }
+    public function products()
+    {
+        return $this->hasMany('App\Product');
+    }
     public function setItem() {
 
     $this->sale_value * $this->sale_amount;
     }
     public function item()
     {
-        return $this->belongsTo('App\Item');
+        return $this->hasOne('App\Item');
+    }
+    public function product()
+    {
+        return $this->hasOne('App\Item');
     }
 
 

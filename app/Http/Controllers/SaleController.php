@@ -110,12 +110,9 @@ class SaleController extends Controller
         $clientList = Client::select('id','name')->get();
         $sale = Sale::find($id);
         $items =  $sale->items()->latest()->get();
-
-
-         //return $result = DB::table("items")->where('sale_id',$id)->select(DB::raw('(sale_value * sale_amount) as totalSale'))->get();
-         $result = DB::table('items')->where('sale_id',$id)
-        //->select(DB::raw('SUM(sale_value * sale_amount) as totalSale'))
-        ->get();
+        $result = DB::table('items')
+                      ->where('sale_id',$id)
+                      ->get();
         $total_price = 0;
         foreach ($result as $item){
             $total_price+=$item->sale_value*$item->sale_amount;
@@ -146,7 +143,20 @@ class SaleController extends Controller
             $sale->client_id = $request->client_id;
             $sale->total = $request->total;
             $sale->is_approved = $request->is_approved;
-            $sale->save();
+
+            /*
+
+            $item = $sale->item;
+            $product = $sale->item->product;
+
+            if($sale->is_approved == 1){
+
+            if ($sale->save()) {
+                  $product->amount = $product->amount - $item->sale_amount;
+                 return $product->update();
+             }
+            }
+            */
             Toastr::success('Venda gerada','Successo');
             //return redirect()->back();
             return view('dashboard.sale.index',compact('sales'));
