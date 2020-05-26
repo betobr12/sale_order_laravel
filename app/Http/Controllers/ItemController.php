@@ -66,7 +66,16 @@ class ItemController extends Controller
 
 
 
+           if (DB::table('items')->where('sale_id',$request->sale_id)->where('product_id', $request->product_id)->count() == 0) {
+
            $item->product_id = $request->product_id;
+
+           }else{
+
+            Toastr::error('Item ja foi inserido','Alerta');
+            return redirect()->back();
+
+           }
 
             $resultSale = $item->sale_id;
             $resultProduct = $item->product_id;
@@ -82,13 +91,6 @@ class ItemController extends Controller
              $amout_product = $product->amount;
          }
 
-         /*
-           if($request->product_id == $id_product ){
-
-            Toastr::error('produto já inserido','Alerta');
-            return redirect()->back();
-
-          }*/
           if($request->sale_amount <=0 or $request->sale_amount > $amout_product ){
 
             Toastr::error('Saldo divergente com o estoque','Alerta');
