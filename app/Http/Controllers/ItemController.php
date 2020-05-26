@@ -63,7 +63,17 @@ class ItemController extends Controller
            $amout_product = [0];
            $item = new Item();
            $item->sale_id = $request->sale_id;
+
+           if (DB::table('items')->where('product_id', $request->product_id)->count() == 0) {
+
            $item->product_id = $request->product_id;
+
+           }else{
+
+            Toastr::error('Item ja foi inserido','Alerta');
+            return redirect()->back();
+
+           }
 
             $resultSale = $item->sale_id;
             $resultProduct = $item->product_id;
