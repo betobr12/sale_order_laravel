@@ -137,30 +137,19 @@ class SaleController extends Controller
      */
     public function update(Request $request, $id)
     {
-        {
+
             $sales = Sale::all();
             $sale = Sale::find($id);
             $sale->client_id = $request->client_id;
             $sale->total = $request->total;
             $sale->is_approved = $request->is_approved;
+            $sale->save();
 
-            /*
 
-            $item = $sale->item;
-            $product = $sale->item->product;
-
-            if($sale->is_approved == 1){
-
-            if ($sale->save()) {
-                  $product->amount = $product->amount - $item->sale_amount;
-                 return $product->update();
-             }
-            }
-            */
             Toastr::success('Venda gerada','Successo');
             //return redirect()->back();
             return view('dashboard.sale.index',compact('sales'));
-        }
+
     }
 
     /**

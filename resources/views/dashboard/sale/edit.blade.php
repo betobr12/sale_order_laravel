@@ -17,7 +17,7 @@
       <form action="{{ route('sale.update', $sale->id) }}" method="POST">
         @method('PUT')
         @csrf
-        <input type="hidden" name="total" class="form-control" value="{{ $total_price  }}">
+        <input type="hidden" name="total" class="form-control" value="{{ $total_price }}">
         <div class="form-row">
         <div class="col-md-6">
             <div class="form-group">
