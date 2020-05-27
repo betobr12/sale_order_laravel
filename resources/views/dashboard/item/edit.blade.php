@@ -12,7 +12,7 @@
     <form action="{{ route('item.update', $item->id) }}" method="POST">
         @method('PUT')
         @csrf
-        <input type="hidden" name="sale_id" class="form-control" value="{{ $item->id }}">
+        <input type="hidden" name="sale_id" class="form-control" value="{{ $item->sale_id }}">
         <div class="form-row">
           <div class="form-group col-md-6">
             <label for="product_id">ID do Produto</label>
