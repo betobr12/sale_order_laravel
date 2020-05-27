@@ -146,7 +146,7 @@ class ItemController extends Controller
         $item = Item::find($id);
 
         $productTarget = Item::findOrFail($item->id);
-        $productList = Product::select('id','name')->get();
+        $productList = Product::select('id','name','amount')->get();
         return view('dashboard.item.edit', compact('item'),compact(['productTarget','productList']));
     }
 
@@ -159,6 +159,9 @@ class ItemController extends Controller
      */
     public function update(Request $request, $id)
     {
+
+        $item = Item::find($id);
+        $item_sta =  $item->sale_amount;
         $this->validate($request,[
 
             'product_id' => 'required',
@@ -167,16 +170,26 @@ class ItemController extends Controller
             'sale_amount' => 'required'
 
            ]);
-
-
-
-
         $item = Item::find($id);
         $item->product_id = $request->product_id;
         $item->sale_id = $request->sale_id;
         $item->sale_value = str_replace(",",".",$request->sale_value);
         $item->sale_amount = $request->sale_amount;
-        $item->save();
+       // $item->save();
+
+         $product = $item->product;
+         $item_add = $request->sale_amount;
+
+        if ($item->save()) {
+            if($item_add > $item_sta){
+            $product->amount =  $item_sta - $item->sale_amount + $product->amount;
+            }else
+              if($item_add < $item_sta){
+             $product->amount =  $item_sta - $item->sale_amount + $product->amount;
+            }
+          $product->update();
+       }
+
 
         $items = Item::all();
 
