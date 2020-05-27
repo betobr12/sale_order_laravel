@@ -8,6 +8,7 @@
 
 @section('content')
 
+<div><p><h5>Codigo da venda: {{ $item->sale_id  }}</h5></p></div>
 <div class="container">
     <form action="{{ route('item.update', $item->id) }}" method="POST">
         @method('PUT')
