@@ -14,4 +14,4 @@
 
 <p>Xampp + MySQL</p>
 
-<p>Estoque atualiza no momento que o produto é inserido na ordem de venda e quando excluido o saldo volta para o estoque</p>
+<p>Estoque atualiza no momento em que o produto é inserido na ordem de venda e quando excluido, o saldo volta para o estoque</p>
