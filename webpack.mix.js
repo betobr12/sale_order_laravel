@@ -16,5 +16,6 @@ mix
     .sass('resources/views/sass/style.scss','public/site/style.css')
     .scripts('node_modules/jquery/dist/jquery.js','public/site/jquery.js')
     .scripts('node_modules/bootstrap/dist/js/bootstrap.bundle.js','public/site/bootstrap.js');
+
     //.js('resources/js/app.js', 'public/js')
     //.sass('resources/sass/app.scss', 'public/css');

@@ -79,11 +79,15 @@ class SaleController extends Controller
         $client = $sale->client()->get();
         $items =  $sale->items()->latest()->get();
 
-        foreach ($items as $key=>$item)
-        {
-            $result = $item->sale_amount * $item->sale_value;
-        }
+        $total_price = DB::table('items')
+        ->where('sale_id',$id)
+        ->get();
+        $result = 0;
 
+        foreach ($total_price as $item)
+        {
+            $result += $item->sale_amount * $item->sale_value;
+        }
 
         return view('dashboard.sale.show',compact('sale','items'), compact(['result']));
 
@@ -117,7 +121,7 @@ class SaleController extends Controller
         foreach ($result as $item){
             $total_price+=$item->sale_value*$item->sale_amount;
         }
-        $total_price;
+       return  $total_price;
          return view('dashboard.sale.edit',compact('sale','items'), compact(['clientTarget', 'clientList','productList','total_price']));
         }else{
             Toastr::error('Venda aprovada não pode ser alterada','Alerta');
@@ -137,8 +141,6 @@ class SaleController extends Controller
      */
     public function update(Request $request, $id)
     {
-
-
             $sale = Sale::find($id);
             $sale->client_id = $request->client_id;
             $sale->total = $request->total;
