@@ -1,28 +1,19 @@
 
 
-  @extends('layouts.app')
-
+@extends('layouts.app')
 @section('title','dashboard')
-
 @push('css')
-
 @endpush
-
 @section('content')
-
-
-    @if (isset($errors) && count($errors) > 0)
+@if (isset($errors) && count($errors) > 0)
     <div class="alert alert-danger">
-        @foreach ($errors->all() as $error)
-            <p>{{ $error }}</p>
-        @endforeach
+    @foreach ($errors->all() as $error)
+        <p>{{ $error }}</p>
+    @endforeach
     </div>
-    @endif
-
-
+@endif
 
 <div class="container">
-
     <form name="client" action="{{ route('client.store') }}" method="POST">
         @csrf
         <div class="form-row">
