@@ -1,12 +1,8 @@
-  @extends('layouts.app')
-
-  @section('title','dashboard')
-
-  @push('css')
-
-  @endpush
-
-  @section('content')
+@extends('layouts.app')
+@section('title','dashboard')
+@push('css')
+@endpush
+@section('content')
 <div class="container">
   <div class="jumbotron">
     <h1 class="display-4">Cadastro do item para Venda</h1>
@@ -24,7 +20,6 @@
                     <option value="{{$product->id}}">{{$product->name}}</option>
                 @endforeach
             </select>
-
           </div>
         </div>
         <div class="form-row">
@@ -60,7 +55,6 @@
         </thead>
         <tbody>
             @foreach ($items as $key=>$item)
-
               <tr>
                 <td>{{ $key + 1 }}</td>
                 <td>{{ $item->id }}</td>
@@ -73,23 +67,13 @@
                 <td>
                     <a href="{{route('item.edit', $item->id)}}"  class="btn btn-primary">Alterar</a>
                     <input class="btn btn-danger" type="submit" value="Excluir">
-
                 </td>
               </tr>
-
-
             @endforeach
-
-
         </tbody>
       </table>
   </div>
-
 </div>
-
-  @endsection
-
-  @push('js')
-
-
-  @endpush
+@endsection
+@push('js')
+@endpush
