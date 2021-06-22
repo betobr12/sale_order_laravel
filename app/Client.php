@@ -17,7 +17,6 @@ class Client extends Model
     public function scopeSlug($query, $slug)
     {
         if($slug)
-            return $query->where('slug', 'LIKE', "%$slug%");
+        return $query->where('slug', 'LIKE', "%$slug%");
     }
-
 }
