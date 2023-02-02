@@ -24,7 +24,7 @@
     "jquery": "^3.5.1",
     "toastr": "^2.1.4",
     "vue": "^2.6.11",
-    "vue-resource": "^1.5.1"
+    "vue-resource": "^1.5.3"
   },
   "name": "sale_order",
   "description": "<br> #composer install <br> #configurar .env <br> #gerar uma APP_KEY -> comando: php artisan key:generate <br> <br> #php artisan migrate ->para instalar as tabelas do banco <br>",
